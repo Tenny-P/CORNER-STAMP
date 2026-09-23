@@ -10,7 +10,7 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background-color: #0b0f19; /* 배경 깜빡임 방지 */
+      background-color: #0b0f19;
     }
     iframe {
       width: 100%;
@@ -22,16 +22,18 @@
 </head>
 <body>
   <script>
-    // 1. 배포된 사장님의 구글 웹앱 주소 (/exec 로 끝나는 주소)
-    var GAS_BASE_URL = "https://script.google.com/home/projects/1K5LqJZwfrRDERm_JGa-YBz1u13TzjA1M5YagaH2_Pqvyuv2f-w4GvG58/edit
+    // ⚠️ [중요] 아래 큰따옴표 안에 복사하신 구글 웹앱 주소를 붙여넣어 주세요!
+    var GAS_URL = "https://script.google.com/macros/s/AKfycbyMJI9w8Q4JS3SMF7_H7mnbsGpIS-y9DdzmnR7A7unvW_UihcDNe5C24vhih2N_r6d0/exec";
 
-";
+    // URL 파라미터(?k=...)를 추출하여 구글 웹앱으로 안전하게 전달
+    var queryString = window.location.search;
+    if (!queryString || queryString.indexOf("k=") === -1) {
+      queryString = "?k=CORNER_STAMP_TOKEN";
+    }
 
-    // 2. NFC 태그로부터 전달된 파라미터(?k=...)를 그대로 전달
-    var currentParams = window.location.search; 
-    var targetUrl = GAS_BASE_URL + currentParams;
+    var targetUrl = GAS_URL + queryString;
 
-    // 3. 배너 없는 전체 화면 프레임 생성
+    // 배너 없는 전체 화면 생성
     var iframe = document.createElement("iframe");
     iframe.src = targetUrl;
     iframe.allow = "fullscreen";
